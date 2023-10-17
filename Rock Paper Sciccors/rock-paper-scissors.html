@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RockPaperScissors</title>
+    
+    <body>
+      <p>Rock Paper Scissors</p>
+
+      <button
+        onclick="
+          move = 0;
+          playGame(move);
+        ";>
+        Rock
+      </button>
+
+      <button
+        onclick="
+          move = 1;
+          playGame(move);
+        ";>
+        Paper
+      </button>
+
+      <button
+        onclick="
+          move = 2;
+          playGame(move);
+        ";>
+        Scissors
+      </button>
+
+      <br>
+      <button
+        onclick="
+          stats.wins = 0;
+          stats.loses = 0;
+          stats.ties = 0;
+          console.log(`You're scores has been reseted.`);
+        ";>
+        Restart scores
+      </button>
+
+      <script>
+        let stats = {
+          wins: 0,
+          ties: 0,
+          loses: 0
+        };
+
+        let move = 0;
+
+        function playGame(move){
+          const enemy = Math.floor(Math.random() * 3)
+
+          if(move === 0){
+            console.log(`Enemy pick Rock.`);
+          }else if(move === 1){
+            console.log(`Enemy pick paper.`);
+          }else{
+            console.log(`Enemy pick Scissors.`);
+          }
+
+          if(enemy === 0){
+            console.log(`Enemy pick Rock.`);
+          }else if(enemy === 1){
+            console.log(`Enemy pick paper.`);
+          }else{
+            console.log(`Enemy pick Scissors.`);
+          }
+          
+          
+          if(move === enemy){
+            stats.ties++;
+          }else if(enemy === move+1){
+            stats.loses++
+          }else if(move == 2 && enemy == 0){
+            stats.loses++;
+          }else{
+            stats.wins++
+          }
+          
+          console.log(stats);
+          // console.log(`Wins = ${stats.wins} | Loses = ${stats.loses} | Ties = ${stats.ties}\n`);
+        }
+      </script>
+    </body>
+  </head>
+</html>
