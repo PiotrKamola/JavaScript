@@ -30,58 +30,81 @@
         Scissors
       </button>
 
-      <br>
+      <div id="moves"> </div>
+      <div id="scores"> Wins = 0 | Loses = 0 | Ties = 0 </div>
+    
       <button
         onclick="
           stats.wins = 0;
           stats.loses = 0;
           stats.ties = 0;
-          console.log(`You're scores has been reseted.`);
+          localStorage.removeItem('stats');
+          moves();
+          changeScores();
         ";>
         Restart scores
       </button>
 
       <script>
-        let stats = {
-          wins: 0,
-          ties: 0,
-          loses: 0
-        };
+        let stats = JSON.parse(localStorage.getItem('stats')) || {
+            wins: 0,
+            loses: 0,
+            ties: 0
+          }
 
         let move = 0;
+        let moveStr;
+        let enemyStr;
+        let whoWin;
 
         function playGame(move){
           const enemy = Math.floor(Math.random() * 3)
 
           if(move === 0){
-            console.log(`Enemy pick Rock.`);
+            moveStr = "Rock";
           }else if(move === 1){
-            console.log(`Enemy pick paper.`);
+            moveStr = "Paper";
           }else{
-            console.log(`Enemy pick Scissors.`);
+            moveStr = "Scissors";
           }
 
           if(enemy === 0){
-            console.log(`Enemy pick Rock.`);
+            enemyStr = "Rock";
           }else if(enemy === 1){
-            console.log(`Enemy pick paper.`);
+            enemyStr = "Paper";
           }else{
-            console.log(`Enemy pick Scissors.`);
+            enemyStr = "Scissors";
           }
           
           
           if(move === enemy){
             stats.ties++;
+            whoWin = "Tie";
           }else if(enemy === move+1){
             stats.loses++
+            whoWin = "Lose";
           }else if(move == 2 && enemy == 0){
             stats.loses++;
+            whoWin = "Lose";
           }else{
             stats.wins++
+            whoWin = "Won";
           }
-          
-          console.log(stats);
-          // console.log(`Wins = ${stats.wins} | Loses = ${stats.loses} | Ties = ${stats.ties}\n`);
+
+          moves(moveStr, enemyStr, whoWin);
+          changeScores(moveStr, enemyStr, whoWin);
+          localStorage.setItem('stats', JSON.stringify(stats));
+        }
+
+        function moves(move, enemy, whoWin){
+          if(moves && enemy && whoWin){
+            document.getElementById("moves").textContent = `You picked ${move}, computer picked ${enemy}, you ${whoWin}`;
+          }else{
+            document.getElementById("moves").textContent = `Scores has been restarted.`;
+          }
+        }
+        function changeScores(move, enemy, whoWin){
+          document.getElementById("scores").textContent = `Wins = ${stats.wins} | Loses = ${stats.loses} | Ties = ${stats.ties}\n`;
         }
       </script>
     </body>
