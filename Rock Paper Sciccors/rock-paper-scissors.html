@@ -1,5 +1,34 @@
 <!DOCTYPE html>
 <html>
+  <style>
+    body{
+      text-align: center;
+      background-color: gray;
+    }
+    .choosingImage{
+      width:100px;
+      height:100px;
+    }
+    .smallerImage{
+      width:50px;
+      height:50px;
+      border-radius: 50%;
+    }
+    .winnerColor{
+      background-color: green;
+    }
+    .looserColor{
+      background-color: red;
+    }
+    .button_choose{
+      border-radius: 50%;
+      border: none;
+      background-color: gray;
+    }
+    .hiddenText{
+      display: none;
+    }
+  </style>
   <head>
     <title>RockPaperScissors</title>
     
@@ -7,31 +36,48 @@
       <p>Rock Paper Scissors</p>
 
       <button
+        class="button_choose"
         onclick="
           move = 0;
           playGame(move);
         ";>
-        Rock
+        <img src="./images/rock.jpg" 
+          class="choosingImage"
+          alt="rock"/>
       </button>
 
       <button
+        class="button_choose"
         onclick="
           move = 1;
           playGame(move);
         ";>
-        Paper
+        <img src="./images/paper.jpg" 
+          class="choosingImage"
+          alt="paper"/>
       </button>
 
       <button
+        class="button_choose"
         onclick="
           move = 2;
           playGame(move);
         ";>
-        Scissors
+        <img src="./images/scissors.jpg" 
+          class="choosingImage"
+          alt="scissors"/>
       </button>
 
-      <div id="moves"> </div>
-      <div id="scores"> Wins = 0 | Loses = 0 | Ties = 0 </div>
+      <p id="moves" class="hiddenText">
+        You picked: <img id = "myMove" class="smallerImage" >
+        Computer picked: <img id = "computerMove" class="smallerImage">
+      </p>
+      <p id="whoWonText" class="hiddenText">
+      </p>
+      <p id="resetScoresText" class="hiddenText">
+        Scores has been restarted.
+      </p>
+      <p id="scores"> Wins = 0 | Loses = 0 | Ties = 0 </p>
     
       <button
         onclick="
@@ -97,14 +143,54 @@
         }
 
         function moves(move, enemy, whoWin){
-          if(moves && enemy && whoWin){
-            document.getElementById("moves").textContent = `You picked ${move}, computer picked ${enemy}, you ${whoWin}`;
+          if(move && enemy && whoWin){
+            document.getElementById("resetScoresText").classList.add("hiddenText");
+            document.getElementById("moves").classList.remove("hiddenText");
+            document.getElementById("whoWonText").classList.remove("hiddenText");
+
+            if(move === "Rock"){
+              document.getElementById("myMove").src="./images/rock.jpg";
+            }else if (move === "Paper"){
+              document.getElementById("myMove").src="./images/paper.jpg";
+            }else{
+              document.getElementById("myMove").src="./images/scissors.jpg";
+            }
+
+            if(enemy === "Rock"){
+              document.getElementById("computerMove").src="./images/rock.jpg";
+            }else if (enemy === "Paper"){
+              document.getElementById("computerMove").src="./images/paper.jpg";
+            }else{
+              document.getElementById("computerMove").src="./images/scissors.jpg";
+            }
+
+            document.getElementById("myMove").classList.remove("winnerColor");
+            document.getElementById("myMove").classList.remove("looserColor");
+            document.getElementById("computerMove").classList.remove("winnerColor");
+            document.getElementById("computerMove").classList.remove("looserColor");
+
+            if(whoWin === "Won"){
+              document.getElementById("myMove").classList.add("winnerColor");
+              document.getElementById("computerMove").classList.add("looserColor");
+              document.getElementById("whoWonText").innerHTML = "You Won";
+            }else if (whoWin === "Lose"){
+              document.getElementById("myMove").classList.add("looserColor");
+              document.getElementById("computerMove").classList.add("winnerColor");
+              document.getElementById("whoWonText").innerHTML = "You Lose";
+            }else{
+              document.getElementById("whoWonText").innerHTML = "You Tied";
+            }
+
           }else{
-            document.getElementById("moves").textContent = `Scores has been restarted.`;
+            document.getElementById("moves").classList.add("hiddenText");
+            document.getElementById("whoWonText").classList.add("hiddenText");
+            document.getElementById("resetScoresText").classList.remove("hiddenText");
           }
         }
+
         function changeScores(move, enemy, whoWin){
-          document.getElementById("scores").textContent = `Wins = ${stats.wins} | Loses = ${stats.loses} | Ties = ${stats.ties}\n`;
+          document.getElementById("scores")
+            .textContent = `Wins = ${stats.wins} | Loses = ${stats.loses} | Ties = ${stats.ties}\n`;
         }
       </script>
     </body>
