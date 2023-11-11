@@ -1,0 +1,28 @@
+body{
+  text-align: center;
+  background-color: gray;
+}
+.choosingImage{
+  width:100px;
+  height:100px;
+  cursor: pointer;
+}
+.smallerImage{
+  width:50px;
+  height:50px;
+  border-radius: 50%;
+}
+.winnerColor{
+  background-color: green;
+}
+.looserColor{
+  background-color: red;
+}
+.button_choose{
+  border-radius: 50%;
+  border: none;
+  background-color: gray;
+}
+.hiddenText{
+  display: none;
+}
